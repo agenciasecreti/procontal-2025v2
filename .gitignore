@@ -1,0 +1,54 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Next.js
+.next/
+out/
+
+# VSCode
+.vscode/
+
+# Env
+.env.*
+
+# Prisma
+prisma/dev.db
+prisma/dev.db-journal
+prisma/migrations/
+
+# Logs
+logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+build/
+
+# Test
+coverage/
+
+# Misc
+*.local
+*.sublime-workspace
+*.sublime-project
+
+# Ignore local database backups
+*.sqlite
+*.sqlite-journal
+
+# Ignore generated files
+*.tsbuildinfo
+
+# Ignore next export
+out/
+
+# Ignore next telemetry
+.next/telemetry
+.vercel

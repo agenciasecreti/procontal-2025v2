@@ -1,0 +1,414 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Config {
+  id         Int       @id @default(autoincrement())
+  name       String
+  key        String    @unique
+  value      String?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+
+  @@index([key], map: "idx_config_key")
+  @@index([created_at], map: "idx_config_created_at")
+  @@index([updated_at], map: "idx_config_updated_at")
+  @@index([deleted_at], map: "idx_config_deleted_at")
+  @@map("config")
+}
+
+model Role {
+  id         Int       @id @default(autoincrement())
+  name       String    @unique
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+  users      User[]
+
+  @@index([name], map: "idx_role_name")
+  @@index([created_at], map: "idx_role_created_at")
+  @@index([updated_at], map: "idx_role_updated_at")
+  @@index([deleted_at], map: "idx_role_deleted_at")
+  @@map("role")
+}
+
+model User {
+  id                 Int            @id @default(autoincrement())
+  name               String
+  email              String         @unique
+  cpf                String?
+  birth_date         DateTime?
+  phone              String?
+  whatsapp           String?
+  avatar             String?
+  password           String
+  role_id            Int
+  reset_code         String?
+  reset_code_expires DateTime?
+  created_at         DateTime       @default(now())
+  updated_at         DateTime       @updatedAt
+  deleted_at         DateTime?
+  address_id         Int?
+  courses            CourseUser[]
+  events             Event[]
+  media              Media[]
+  posts              Post[]
+  refresh_tokens     RefreshToken[]
+  teachers           Teacher[]
+  address            Address?       @relation(fields: [address_id], references: [id])
+  role               Role           @relation(fields: [role_id], references: [id])
+
+  @@index([name], map: "idx_user_name")
+  @@index([email], map: "idx_user_email")
+  @@index([cpf], map: "idx_user_cpf")
+  @@index([role_id, email], map: "idx_user_role_id_email")
+  @@index([created_at], map: "idx_user_created_at")
+  @@index([updated_at], map: "idx_user_updated_at")
+  @@index([deleted_at], map: "idx_user_deleted_at")
+  @@map("user")
+}
+
+model RefreshToken {
+  id         Int       @id @default(autoincrement())
+  token      String    @unique
+  user_id    Int
+  user_agent String?
+  ip_address String?
+  created_at DateTime  @default(now())
+  expires_at DateTime
+  revoked    Boolean   @default(false)
+  revoked_at DateTime?
+  user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id], map: "idx_refresh_token_user_id")
+  @@map("refresh_token")
+}
+
+model ApiKey {
+  id           Int       @id @default(autoincrement())
+  name         String
+  key_hash     String    @unique
+  permissions  String?
+  ip_whitelist String?
+  expires_at   DateTime?
+  active       Boolean   @default(true)
+  last_used_at DateTime?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  deleted_at   DateTime?
+
+  @@index([key_hash], map: "idx_api_key_hash")
+  @@index([active, created_at], map: "idx_api_key_active_created_at")
+  @@index([expires_at], map: "idx_api_key_expires")
+  @@index([created_at], map: "idx_api_key_created_at")
+  @@index([updated_at], map: "idx_api_key_updated_at")
+  @@index([deleted_at], map: "idx_api_key_deleted_at")
+  @@map("api_key")
+}
+
+model Category {
+  id                 Int              @id @default(autoincrement())
+  name               String
+  slug               String
+  type               String           @default("news")
+  order              Int              @default(0)
+  parent_id          Int?
+  created_at         DateTime         @default(now())
+  updated_at         DateTime         @updatedAt
+  deleted_at         DateTime?
+  parent             Category?        @relation("CategoryToCategory", fields: [parent_id], references: [id])
+  children           Category[]       @relation("CategoryToCategory")
+  courses_categories CourseCategory[]
+  post_categories    PostCategory[]
+
+  @@index([name], map: "idx_category_name")
+  @@index([slug], map: "idx_category_slug")
+  @@index([type], map: "idx_category_type")
+  @@index([order], map: "idx_category_order")
+  @@index([parent_id], map: "idx_category_parent_id")
+  @@index([created_at], map: "idx_category_created_at")
+  @@index([updated_at], map: "idx_category_updated_at")
+  @@index([deleted_at], map: "idx_category_deleted_at")
+  @@map("category")
+}
+
+model Post {
+  id              Int            @id @default(autoincrement())
+  title           String
+  slug            String         @unique
+  image           String?
+  type            String         @default("news")
+  lead            String?
+  content         String?
+  start_date      DateTime       @default(now())
+  end_date        DateTime?
+  user_id         Int
+  highlight       Boolean        @default(false)
+  active          Boolean        @default(false)
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+  deleted_at      DateTime?
+  user            User           @relation(fields: [user_id], references: [id])
+  post_categories PostCategory[]
+
+  @@index([title], map: "idx_post_title")
+  @@index([slug, active], map: "idx_post_slug_active")
+  @@index([type], map: "idx_post_type")
+  @@index([user_id, active], map: "idx_post_user_id_active")
+  @@index([start_date, end_date], map: "idx_post_start_date_end_date")
+  @@index([active, created_at], map: "idx_post_active_created_at")
+  @@index([type, active], map: "idx_post_type_active")
+  @@index([highlight], map: "idx_post_highlight")
+  @@index([created_at], map: "idx_post_created_at")
+  @@index([updated_at], map: "idx_post_updated_at")
+  @@index([deleted_at], map: "idx_post_deleted_at")
+  @@map("post")
+}
+
+model PostCategory {
+  id          Int       @id @default(autoincrement())
+  post_id     Int
+  category_id Int
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  deleted_at  DateTime?
+  category    Category  @relation(fields: [category_id], references: [id])
+  post        Post      @relation(fields: [post_id], references: [id])
+
+  @@index([post_id], map: "idx_post_category_post_id")
+  @@index([category_id], map: "idx_post_category_category_id")
+  @@index([created_at], map: "idx_post_category_created_at")
+  @@index([updated_at], map: "idx_post_category_updated_at")
+  @@index([deleted_at], map: "idx_post_category_deleted_at")
+  @@map("post_category")
+}
+
+model Banner {
+  id           Int       @id @default(autoincrement())
+  title        String
+  position     String
+  text         String?
+  btn_text     String?
+  image        String?
+  image_mobile String?
+  link         String?
+  start_date   DateTime  @default(now())
+  end_date     DateTime?
+  active       Boolean   @default(false)
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  deleted_at   DateTime?
+
+  @@index([position, active], map: "idx_banner_position_active")
+  @@index([active, created_at], map: "idx_banner_active_created_at")
+  @@index([start_date, end_date], map: "idx_banner_start_date_end_date")
+  @@index([created_at], map: "idx_banner_created_at")
+  @@index([updated_at], map: "idx_banner_updated_at")
+  @@index([deleted_at], map: "idx_banner_deleted_at")
+  @@map("banner")
+}
+
+model Media {
+  id         Int       @id @default(autoincrement())
+  file       String
+  alt_text   String?
+  user_id    Int
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+  user       User      @relation(fields: [user_id], references: [id])
+
+  @@index([file], map: "idx_media_file")
+  @@index([user_id], map: "idx_media_user_id")
+  @@index([created_at], map: "idx_media_created_at")
+  @@index([updated_at], map: "idx_media_updated_at")
+  @@index([deleted_at], map: "idx_media_deleted_at")
+  @@map("media")
+}
+
+model Course {
+  id         Int              @id @default(autoincrement())
+  title      String
+  slug       String           @unique
+  content    String?
+  workload   Int?
+  image      String?
+  active     Boolean          @default(false)
+  created_at DateTime         @default(now())
+  updated_at DateTime         @updatedAt
+  deleted_at DateTime?
+  end_date   DateTime?
+  start_date DateTime         @default(now())
+  categories CourseCategory[]
+  modules    CourseModule[]
+  teachers   CourseTeacher[]
+  users      CourseUser[]
+
+  @@index([title], map: "idx_course_title")
+  @@index([slug, active], map: "idx_course_slug_active")
+  @@index([active, created_at], map: "idx_course_active_created_at")
+  @@index([start_date, end_date], map: "idx_course_start_date_end_date")
+  @@index([created_at], map: "idx_course_created_at")
+  @@index([updated_at], map: "idx_course_updated_at")
+  @@index([deleted_at], map: "idx_course_deleted_at")
+  @@map("course")
+}
+
+model CourseModule {
+  id         Int       @id @default(autoincrement())
+  course_id  Int
+  title      String
+  slug       String    @unique
+  content    String?
+  workload   Int?
+  order      Int       @default(0)
+  active     Boolean   @default(false)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+  course     Course    @relation(fields: [course_id], references: [id])
+
+  @@index([course_id, active], map: "idx_course_module_course_id_active")
+  @@index([title], map: "idx_course_module_title")
+  @@index([slug], map: "idx_course_module_slug")
+  @@index([active, created_at], map: "idx_course_module_active_created_at")
+  @@index([order, active], map: "idx_course_module_order_active")
+  @@index([created_at], map: "idx_course_module_created_at")
+  @@index([updated_at], map: "idx_course_module_updated_at")
+  @@index([deleted_at], map: "idx_course_module_deleted_at")
+  @@map("course_module")
+}
+
+model CourseCategory {
+  id          Int       @id @default(autoincrement())
+  category_id Int
+  course_id   Int
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  deleted_at  DateTime?
+  category    Category  @relation(fields: [category_id], references: [id])
+  course      Course    @relation(fields: [course_id], references: [id])
+
+  @@index([category_id], map: "idx_course_category_category_id")
+  @@index([course_id], map: "idx_course_category_course_id")
+  @@index([created_at], map: "idx_course_category_created_at")
+  @@index([updated_at], map: "idx_course_category_updated_at")
+  @@index([deleted_at], map: "idx_course_category_deleted_at")
+  @@map("course_category")
+}
+
+model Teacher {
+  id         Int             @id @default(autoincrement())
+  user_id    Int?
+  name       String
+  full_name  String?
+  bio        String?
+  genre      String          @default("m")
+  prefix     String?
+  image      String?
+  active     Boolean         @default(false)
+  created_at DateTime        @default(now())
+  updated_at DateTime        @updatedAt
+  deleted_at DateTime?
+  courses    CourseTeacher[]
+  user       User?           @relation(fields: [user_id], references: [id])
+
+  @@index([name], map: "idx_teacher_name")
+  @@index([active], map: "idx_teacher_active")
+  @@index([user_id], map: "idx_teacher_user_id")
+  @@index([created_at], map: "idx_teacher_created_at")
+  @@index([updated_at], map: "idx_teacher_updated_at")
+  @@index([deleted_at], map: "idx_teacher_deleted_at")
+  @@map("teacher")
+}
+
+model CourseTeacher {
+  id         Int       @id @default(autoincrement())
+  course_id  Int
+  teacher_id Int
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+  course     Course    @relation(fields: [course_id], references: [id])
+  teacher    Teacher   @relation(fields: [teacher_id], references: [id])
+
+  @@index([course_id], map: "idx_course_teacher_course_id")
+  @@index([teacher_id], map: "idx_course_teacher_teacher_id")
+  @@index([created_at], map: "idx_course_teacher_created_at")
+  @@index([updated_at], map: "idx_course_teacher_updated_at")
+  @@index([deleted_at], map: "idx_course_teacher_deleted_at")
+  @@map("course_teacher")
+}
+
+model CourseUser {
+  id         Int       @id @default(autoincrement())
+  course_id  Int
+  user_id    Int
+  active     Boolean   @default(false)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+  course     Course    @relation(fields: [course_id], references: [id])
+  user       User      @relation(fields: [user_id], references: [id])
+
+  @@index([course_id, user_id], map: "idx_course_user_course_id_user_id")
+  @@index([course_id, active], map: "idx_course_user_course_id_active")
+  @@index([user_id, active], map: "idx_course_user_user_id_active")
+  @@index([active, created_at], map: "idx_course_user_active_created_at")
+  @@index([created_at], map: "idx_course_user_created_at")
+  @@index([updated_at], map: "idx_course_user_updated_at")
+  @@index([deleted_at], map: "idx_course_user_deleted_at")
+  @@map("course_user")
+}
+
+model Event {
+  id         Int       @id @default(autoincrement())
+  user_id    Int
+  title      String
+  slug       String    @unique
+  content    String?
+  start_date DateTime
+  end_date   DateTime
+  image      String?
+  active     Boolean   @default(false)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+  user       User      @relation(fields: [user_id], references: [id])
+
+  @@index([start_date], map: "idx_event_start_date")
+  @@index([end_date], map: "idx_event_end_date")
+  @@index([created_at], map: "idx_event_created_at")
+  @@index([updated_at], map: "idx_event_updated_at")
+  @@index([deleted_at], map: "idx_event_deleted_at")
+  @@map("event")
+}
+
+model Address {
+  id           Int       @id @default(autoincrement())
+  street       String
+  number       String
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  zip_code     String
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  deleted_at   DateTime?
+  users        User[]
+
+  @@index([city], map: "idx_address_city")
+  @@index([state], map: "idx_address_state")
+  @@index([zip_code], map: "idx_address_zip_code")
+  @@index([created_at], map: "idx_address_created_at")
+  @@index([updated_at], map: "idx_address_updated_at")
+  @@index([deleted_at], map: "idx_address_deleted_at")
+  @@map("address")
+}

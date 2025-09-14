@@ -1,0 +1,231 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  * {
+    border: var(--border);
+    outline: var(--ring) / 50%;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+  }
+}
+
+/* CKEditor5 Styling */
+.ck.ck-toolbar,
+.ck.ck-editor__main > .ck-editor__editable {
+  background: none !important;
+  background-color: transparent !important;
+}
+
+.editor-container_include-word-count.editor-container_classic-editor .editor_container__word-count {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: none;
+}
+
+.editor-container_include-word-count.editor-container_classic-editor
+  .editor-container__editor
+  .ck-editor
+  .ck-editor__editable {
+  border-radius: 0;
+  min-height: 300px;
+}
+.ck.ck-word-count {
+  gap: var(--ck-spacing-small);
+  justify-content: flex-start;
+  font-size: var(--ck-font-size-base);
+  line-height: var(--ck-line-height-base);
+  font-family: var(--ck-font-face);
+  padding: var(--ck-spacing-small) var(--ck-spacing-standard);
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.ck.ck-sticky-panel__content {
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  border: 1px solid var(--border) !important;
+  background: var(--accent) !important;
+}
+
+.ck.ck-editor__main > .ck-editor__editable {
+  background: var(--card) !important;
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+}
+
+/* IMPORTANTE */
+/* Deixar sempre por Último */
+:root {
+  --radius: 0.65rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(26.033% 0.00003 271.152);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.141 0.005 285.823);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.141 0.005 285.823);
+  --primary: oklch(0.3289 0.0887 272.17);
+  --primary-foreground: oklch(0.967 0.001 286.375);
+  --secondary: oklch(0.4689 0.1329 271.58);
+  --secondary-foreground: oklch(0.967 0.001 286.375);
+  --tertiary: oklch(0.7064 0.1304 65.65);
+  --tertiary-foreground: oklch(0.3211 0 0);
+  --quaternary: oklch(0.8044 0.1309 78.22);
+  --quaternary-foreground: oklch(0.3211 0 0);
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-foreground: oklch(0.552 0.016 285.938);
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-foreground: oklch(0.21 0.006 285.885);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.92 0.004 286.32);
+  --input: oklch(0.92 0.004 286.32);
+  --ring: oklch(0.3289 0.0887 272.17);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(65.604% 0.13864 273.213);
+  --chart-3: oklch(0.3289 0.0887 272.17);
+  --chart-4: oklch(0.8044 0.1309 78.22);
+  --chart-5: oklch(0.7064 0.1304 65.65);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-primary: oklch(0.3289 0.0887 272.17);
+  --sidebar-primary-foreground: oklch(0.967 0.001 286.375);
+  --sidebar-accent: oklch(0.967 0.001 286.375);
+  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
+  --sidebar-border: oklch(0.92 0.004 286.32);
+  --sidebar-ring: oklch(0.3289 0.0887 272.17);
+  --connect-back: url('/images/connect-light.webp');
+
+  /* -- CKEditor ------------------------------------------------------------------------------- */
+  --ck-color-base-foreground: var(--foreground) !important;
+  --ck-color-base-background: var(--background) !important;
+  --ck-color-base-border: var(--border) !important;
+  --ck-color-base-action: var(--secondary) !important;
+  --ck-color-base-text: var(--foreground) !important;
+  --ck-color-base-active: var(--primary) !important;
+  --ck-color-base-active-focus: var(--secondary) !important;
+  --ck-color-button-default-hover-background: var(--color-primary) !important;
+  --ck-color-button-default-active-background: var(--color-primary-foreground) !important;
+  --ck-color-button-on-background: var(--card) !important;
+  --ck-color-button-on-hover-background: var(--color-primary) !important;
+  --ck-color-split-button-hover-background: var(--color-primary) !important;
+  --ck-color-button-on-active-background: var(--color-primary) !important;
+  --ck-color-button-on-disabled-background: var(--color-primary) !important;
+  --ck-color-button-on-color: var(--color-secondary) !important;
+  --ck-color-switch-button-off-background: hsl(0, 0%, 57.6%) !important;
+  --ck-color-switch-button-off-hover-background: hsl(0, 0%, 49%) !important;
+  --ck-color-switch-button-on-hover-background: hsl(104, 53.2%, 40.2%) !important;
+  --ck-color-switch-button-inner-shadow: hsla(0, 0%, 0%, 0.1) !important;
+  --ck-content-font-color: var(--foreground) !important;
+  --ck-evaluation-badge-background: var(--background) !important;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-tertiary-foreground: var(--tertiary-foreground);
+  --color-tertiary: var(--tertiary);
+  --color-quaternary-foreground: var(--quaternary-foreground);
+  --color-quaternary: var(--quaternary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+.dark {
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.21 0.006 285.885);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.8044 0.1309 78.22);
+  --primary-foreground: oklch(0.3211 0 0);
+  --secondary: oklch(0.7064 0.1304 65.65);
+  --secondary-foreground: oklch(0.3211 0 0);
+  --tertiary: oklch(0.4689 0.1329 271.58);
+  --tertiary-foreground: oklch(0.967 0.001 286.375);
+  --quaternary: oklch(0.3289 0.0887 272.17);
+  --quaternary-foreground: oklch(0.967 0.001 286.375);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.554 0.135 66.442);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.21 0.006 285.885);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.8044 0.1309 78.22);
+  --sidebar-primary-foreground: oklch(0.3211 0 0);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.554 0.135 66.442);
+  --connect-back: url('/images/connect-dark.webp');
+
+  /* -- CKEditor ------------------------------------------------------------------------------- */
+  --ck-color-base-foreground: var(--foreground) !important;
+  --ck-color-base-background: var(--background) !important;
+  --ck-color-base-border: var(--border) !important;
+  --ck-color-base-action: var(--secondary) !important;
+  --ck-color-base-text: var(--foreground) !important;
+  --ck-color-base-active: var(--primary) !important;
+  --ck-color-base-active-focus: var(--secondary) !important;
+  --ck-color-button-default-hover-background: var(--color-primary) !important;
+  --ck-color-button-default-active-background: var(--color-primary-foreground) !important;
+  --ck-color-button-on-background: var(--card) !important;
+  --ck-color-button-on-hover-background: var(--color-primary) !important;
+  --ck-color-split-button-hover-background: var(--color-primary) !important;
+  --ck-color-button-on-active-background: var(--color-primary) !important;
+  --ck-color-button-on-disabled-background: var(--color-primary) !important;
+  --ck-color-button-on-color: var(--color-secondary) !important;
+  --ck-color-switch-button-off-background: hsl(0, 0%, 57.6%) !important;
+  --ck-color-switch-button-off-hover-background: hsl(0, 0%, 49%) !important;
+  --ck-color-switch-button-on-hover-background: hsl(104, 53.2%, 40.2%) !important;
+  --ck-color-switch-button-inner-shadow: hsla(0, 0%, 0%, 0.1) !important;
+  --ck-content-font-color: var(--foreground) !important;
+}

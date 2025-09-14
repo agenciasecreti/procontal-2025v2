@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Camada_2" data-name="Camada 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1550.78 1019.7">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #263166;
+      }
+
+      .cls-3 {
+        fill: #f28a18;
+      }
+
+      .cls-4 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-1" x="105.94" width="1444.84" height="1019.7"/>
+    </clipPath>
+  </defs>
+  <g id="Camada_5" data-name="Camada 5">
+    <g class="cls-4">
+      <path class="cls-3" d="M1550.42,378.37c0,203.18-164.93,377.67-377.67,377.67h0c-86.77,0-187.29,64.56-223.38,143.46l-37.16,81.23c-9.56,21.51-33.46,38.25-57.37,38.25h-241.42l239.03-516.31h320.3c52.59,0,124.3-43.02,124.3-124.29,0-64.54-52.59-124.3-124.3-124.3H247.06c-77.21,0-113.9-57.35-81.55-127.46l41.57-90.06C216.64,15.04,240.54.7,264.44.7h908.31c217.52,0,377.67,179.27,377.67,377.67Z"/>
+    </g>
+  </g>
+  <g id="Camada_6" data-name="Camada 6">
+    <polygon class="cls-2" points="0 502.27 72.39 616.01 376.77 616.01 247.37 890.95 329.31 1019.7 572.84 502.27 0 502.27"/>
+  </g>
+</svg>
