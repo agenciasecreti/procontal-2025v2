@@ -32,10 +32,10 @@ const EmblaCarousel = ({
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi, onNavButtonClick);
 
+  console.log('slides:', slides);
+
   const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } =
     usePrevNextButtons(emblaApi, onNavButtonClick);
-
-  console.log('Slides do carousel:', slides);
 
   return (
     <>
@@ -73,20 +73,18 @@ const EmblaCarousel = ({
                         />
 
                         {/* Mobile Image */}
-                        {banner.imageMobile && (
-                          <ImageOpt
-                            className="block max-h-screen min-h-screen w-full object-cover lg:hidden"
-                            src={`${process.env.NEXT_PUBLIC_CDN_URL}/${banner.imageMobile}`}
-                            alt={banner.title || 'Procontal Treinamentos'}
-                            width={768}
-                            height={1024}
-                            quality={85}
-                            priority={true}
-                            sizes="100vw"
-                            cacheKey="v1"
-                            lazy={false} // Imagem não é lazy load para garantir que carregue imediatamente
-                          />
-                        )}
+                        <ImageOpt
+                          className="block max-h-screen min-h-screen w-full object-cover lg:hidden"
+                          src={`${process.env.NEXT_PUBLIC_CDN_URL}/${banner.image_mobile ?? banner.image}`}
+                          alt={banner.title || 'Procontal Treinamentos'}
+                          width={768}
+                          height={1024}
+                          quality={85}
+                          priority={true}
+                          sizes="100vw"
+                          cacheKey="v1"
+                          lazy={false} // Imagem não é lazy load para garantir que carregue imediatamente
+                        />
                       </>
                     )}
                     <div className="absolute top-0 z-100 h-full w-full bg-gradient-to-b from-transparent to-black/100">
@@ -127,7 +125,7 @@ const EmblaCarousel = ({
                                 trackClickWhatsapp('whatsapp-carousel', 'Contato via WhatsApp')
                               }
                             >
-                              {banner.btnText || 'Saiba Mais'}
+                              {banner.btn_text || 'Saiba Mais'}
                             </Link>
                           </motion.button>
                         </div>

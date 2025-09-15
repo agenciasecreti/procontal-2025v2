@@ -18,14 +18,15 @@ function CarouselSkeleton() {
 }
 
 const fetchBanners = async () => {
-  const res = await fetch('/api/banners', {
+  const res = await fetch('/api/banners?select=title,image,image_mobile,text,link,btn_text', {
     method: 'GET',
     cache: 'no-store',
   });
-  const { success, data } = await res.json();
-  if (!success) throw new Error('Failed to fetch banners');
 
-  return data;
+  const { success, data, error } = await res.json();
+  if (!success) throw new Error('Failed to fetch banners: ' + error.message);
+
+  return data || [];
 };
 
 export default function Hero() {
@@ -36,7 +37,7 @@ export default function Hero() {
     setLoading(true);
     fetchBanners()
       .then(function (banners) {
-        setPrincipals(banners || []);
+        setPrincipals(banners);
         setLoading(false);
       })
       .catch(function () {

@@ -17,8 +17,6 @@ for (const env of requiredEnv) {
 export const config = {
   // URLs Base
   urls: {
-    base: process.env.BASE_URL || 'http://localhost:3000',
-    frontend: process.env.FRONTEND_URL || process.env.BASE_URL || 'http://localhost:3000',
     public: process.env.NEXT_PUBLIC_SITE_URL || 'https://localhost:3001',
     cdn: process.env.NEXT_PUBLIC_CDN_URL || '',
   },
@@ -85,6 +83,9 @@ export const config = {
       get courses() {
         return config.admin.enabledFeatures.includes('courses');
       },
+      get teachers() {
+        return config.admin.enabledFeatures.includes('teachers');
+      },
       get users() {
         return config.admin.enabledFeatures.includes('users');
       },
@@ -121,6 +122,7 @@ export function debugConfig() {
           posts: config.admin.features.posts,
           banners: config.admin.features.banners,
           courses: config.admin.features.courses,
+          teachers: config.admin.features.teachers,
           users: config.admin.features.users,
           config: config.admin.features.config,
         },
@@ -151,7 +153,6 @@ export function validateConfig() {
 
   // Validar URLs
   try {
-    new URL(config.urls.base);
     new URL(config.urls.public);
   } catch {
     errors.push('URLs inválidas detectadas');

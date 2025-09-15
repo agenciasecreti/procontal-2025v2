@@ -10,7 +10,7 @@ import { NextRequest, NextResponse } from 'next/server';
  * @returns NextResponse com a lista de configurações ou erro.
  */
 export async function GET() {
-  // Rota pública - não requer autenticação para listar configurações
+  // Rota protegida pelo middleware CORS - permite acesso apenas do próprio app
 
   try {
     // Consulta todos as configurações ativas (não deletadas)

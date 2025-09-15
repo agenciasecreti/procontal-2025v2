@@ -29,7 +29,6 @@ export default function Contact() {
       const htmlMessage = ContactMessage({ form });
       const res = await fetch('/api/sendmail', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           subject: form.subject,
           to: form.to,
@@ -41,12 +40,12 @@ export default function Contact() {
         }),
       });
 
-      const responseData = await res.json();
+      const { success, data, error } = await res.json();
 
-      if (res.ok && responseData.success) {
+      if (success) {
         trackFormSubmit('contact-form', true);
         setStatus({
-          message: responseData.message || 'Mensagem enviada com sucesso!',
+          message: data.message || 'Mensagem enviada com sucesso!',
           type: 'success',
         });
         setLoading(false);
@@ -55,7 +54,7 @@ export default function Contact() {
         trackFormSubmit('contact-form', false);
         setLoading(false);
         setStatus({
-          message: responseData.message || 'Erro ao enviar mensagem. Tente novamente.',
+          message: error.message || 'Erro ao enviar mensagem. Tente novamente.',
           type: 'error',
         });
       }
@@ -90,7 +89,7 @@ export default function Contact() {
                   placeholder={'Nome Completo'}
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="border-foreground/20 focus:border-primary w-full border-b-2 border-solid bg-transparent px-3 py-2"
+                  className="border-foreground/20 focus:border-primary w-full border-0 border-b-2 border-solid bg-transparent px-3 py-2"
                   required
                 />
                 <input
@@ -100,7 +99,7 @@ export default function Contact() {
                   placeholder={'Telefone'}
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  className="border-foreground/20 focus:border-primary w-full border-b-2 border-solid bg-transparent px-3 py-2"
+                  className="border-foreground/20 focus:border-primary w-full border-0 border-b-2 border-solid bg-transparent px-3 py-2"
                   required
                 />
                 <input
@@ -110,7 +109,7 @@ export default function Contact() {
                   placeholder={'E-mail'}
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="border-foreground/20 focus:border-primary w-full border-b-2 border-solid bg-transparent px-3 py-2"
+                  className="border-foreground/20 focus:border-primary w-full border-0 border-b-2 border-solid bg-transparent px-3 py-2"
                   required
                 />
                 <textarea
@@ -119,7 +118,7 @@ export default function Contact() {
                   placeholder={'Sua Mensagem'}
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className="border-foreground/20 focus:border-primary h-30 w-full border-b-2 border-solid bg-transparent px-3 py-2"
+                  className="border-foreground/20 focus:border-primary h-30 w-full border-0 border-b-2 border-solid bg-transparent px-3 py-2"
                   required
                 />
                 {status && (

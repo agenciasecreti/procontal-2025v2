@@ -3,8 +3,8 @@ export type BannerPrincipalType = {
   title: string;
   position: string;
   text: string;
-  btnText: string;
+  btn_text: string;
   image: string;
-  imageMobile: string;
+  image_mobile: string;
   link: string;
 };

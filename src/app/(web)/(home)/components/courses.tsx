@@ -11,14 +11,15 @@ import { VisibilityTracker } from '@/components/analytics/visibility-tracker';
 import { trackView } from '@/lib/tracking';
 
 const fetchCourses = async () => {
-  const res = await fetch('/api/courses', {
+  const res = await fetch('/api/courses?select=id,title,slug,content,workload,active,modules', {
     method: 'GET',
     cache: 'no-store',
   });
 
-  if (!res.ok) throw new Error('Falha ao buscar cursos');
+  const { success, data, error } = await res.json();
+  if (!success) throw new Error('Failed to fetch courses: ' + error.message);
 
-  return res.json();
+  return data || [];
 };
 
 type CourseType = {
@@ -45,11 +46,12 @@ export default function Courses() {
   useEffect(() => {
     setLoading(true);
     fetchCourses()
-      .then(function (courses) {
-        setCourses(courses.data || []);
+      .then((courses) => {
+        setCourses(courses);
         setLoading(false);
       })
-      .catch(function () {
+      .catch((error) => {
+        console.error('Erro ao buscar cursos:', error);
         setCourses([]);
         setLoading(false);
       });

@@ -1,6 +1,6 @@
+import { Separator } from '@/components/ui/separator';
 import Footer from '@/components/web/footer';
 import Header from '@/components/web/header';
-import { Separator } from '@/components/ui/separator';
 import { generateSEOMetadata } from '@/lib/seo';
 import { Metadata } from 'next';
 import Image from 'next/image';
@@ -8,19 +8,17 @@ import Image from 'next/image';
 // Função para buscar dados diretamente da API externa (sem proxy)
 const fetchPost = async ({ id }: { id: number | string }) => {
   try {
-    const res = await fetch(`${process.env.API_URL}/posts/${id}`, {
+    const res = await fetch(`${process.env.API_URL}/api/posts/${id}`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.API_KEY!,
-      },
     });
 
-    if (!res.ok) {
-      return null; // Retorna null se a requisição falhar
+    const { success, data, error } = await res.json();
+    if (!success) {
+      console.error('Erro ao buscar post:', error);
+      return null; // Retorna null se a API indicar falha
     }
 
-    return res.json();
+    return data;
   } catch (error) {
     console.error(error);
     return null; // Retorna null em caso de erro

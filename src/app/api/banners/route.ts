@@ -17,24 +17,13 @@ const prismaExt = prisma.$extends(pagination());
 // @route GET /api/banners
 // Retorna a lista de banners ativos (não deletados).
 export async function GET(req: NextRequest) {
-  // Verifica a autenticação do usuário
-  const authResult = await verifyAuth(req);
-  if (authResult instanceof NextResponse) return authResult;
-
-  // Se for autenticação via API Key
-  if (authResult.type === 'api-key') {
-    const permissions = authResult.apiKey.apiKeyData?.permissions || [];
-
-    // Verificar se tem a permissão necessária
-    if (!permissions.includes('read:banner')) {
-      return ApiResponse.authenticationError('Permissão insuficiente para acessar banners.');
-    }
-  }
+  // Rota protegida pelo middleware CORS - permite acesso apenas do próprio app
 
   const limit = parseInt(req.nextUrl.searchParams.get('limit') || '10');
   const page = parseInt(req.nextUrl.searchParams.get('page') || '1');
   const search = req.nextUrl.searchParams.get('search') || '';
   const select = req.nextUrl.searchParams.get('select') || '';
+  console.log('select:', select);
   const position = req.nextUrl.searchParams.get('position') || '';
   const active =
     req.nextUrl.searchParams.get('active') !== null

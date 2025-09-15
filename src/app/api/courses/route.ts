@@ -17,19 +17,7 @@ const prismaExt = prisma.$extends(pagination());
 // @route GET /api/courses
 // Retorna a lista de cursos ativos (não deletados).
 export async function GET(req: NextRequest) {
-  // Verifica a autenticação do usuário
-  const authResult = await verifyAuth(req);
-  if (authResult instanceof NextResponse) return authResult;
-
-  // Se for autenticação via API Key
-  if (authResult.type === 'api-key') {
-    const permissions = authResult.apiKey.apiKeyData?.permissions || [];
-
-    // Verificar se tem a permissão necessária
-    if (!permissions.includes('read:course')) {
-      return ApiResponse.authenticationError('Permissão insuficiente para acessar cursos.');
-    }
-  }
+  // Rota protegida pelo middleware CORS - permite acesso apenas do próprio app
 
   const limit = parseInt(req.nextUrl.searchParams.get('limit') || '10');
   const page = parseInt(req.nextUrl.searchParams.get('page') || '1');
@@ -74,7 +62,6 @@ export async function GET(req: NextRequest) {
     columns = {
       id: true,
       title: true,
-      slug: true,
       workload: true,
       active: true,
     };

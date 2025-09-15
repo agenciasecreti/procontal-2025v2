@@ -1,10 +1,15 @@
 import ApiResponse from '@/lib/api-response';
+import { verifyAuth } from '@/lib/auth';
+import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-export async function POST(request: Request) {
-  const body = await request.json();
+export async function POST(req: NextRequest) {
+  // Verifica a autenticação do usuário
+  const authResult = await verifyAuth(req);
+  if (authResult instanceof NextResponse) return authResult;
 
-  const { to, from, subject, message } = body;
+  const { to, from, subject, message } = await req.json();
+
   if (!to || !from || !subject || !message) {
     return ApiResponse.validationError(
       'Campos obrigatórios faltando. Por favor, verifique se todos os campos obrigatórios estão preenchidos.'

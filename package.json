@@ -1,6 +1,6 @@
 {
-  "name": "secreti-tecnologia",
-  "version": "0.1.0",
+  "name": "procontal-2025",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -123,8 +123,5 @@
     "tw-animate-css": "^1.3.4",
     "typescript": "^5",
     "@types/react-scroll": "^1.8.10"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
   }
 }

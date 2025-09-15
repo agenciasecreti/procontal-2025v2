@@ -20,9 +20,10 @@ const fetchTeachers = async () => {
     cache: 'no-store',
   });
 
-  if (!res.ok) throw new Error('Failed to fetch banners');
+  const { success, data, error } = await res.json();
+  if (!success) throw new Error('Failed to fetch teachers: ' + error.message);
 
-  return res.json();
+  return data || [];
 };
 
 type TeachersType = {
@@ -44,7 +45,7 @@ export default function Teachers() {
     setLoading(true);
     fetchTeachers()
       .then(function (teachers) {
-        setTeachers(teachers.data || []);
+        setTeachers(teachers);
         setLoading(false);
       })
       .catch(function () {

@@ -1,0 +1,106 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: var(--dark-background);
+    --foreground: var(--dark-foreground);
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Open Sans', sans-serif;
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+    outline-color: hsl(var(--ring) / 0.5);
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}
+
+/* Alertbar */
+@keyframes alertbar {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.alertbar .animate {
+  animation: alertbar 25s linear infinite;
+}
+
+#home > section#cursos,
+.bg-1 {
+  background-image: url('/images/back-01.webp');
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: top center;
+}
+
+#home > section#porque {
+  background-image: url('/images/back-why.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#home > section#estrutura {
+  background-image: url('/images/back-structure.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#home > section#estrutura .connect-light {
+  background-image: var(--connect-back);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#home > section#empresas > div {
+  background-image: url('/images/back-02.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.cardDesc ul {
+  margin-left: 1rem;
+  list-style: disc;
+  padding: 0rem 2rem;
+}
+
+.flip-card {
+  perspective: 1000px;
+}
+
+.flip-card .transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.flip-card .backface-hidden {
+  backface-visibility: hidden;
+}
+
+.flip-card .rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.list ul {
+  list-style: disc;
+  padding-left: 1rem;
+}
+
+.list ul li {
+  margin-bottom: 0.75rem;
+}

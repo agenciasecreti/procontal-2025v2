@@ -136,14 +136,7 @@ export function rateLimit(config: RateLimitConfig) {
 
 // CORS configuration
 export const corsConfig = {
-  allowedOrigins: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'http://127.0.0.1:3000',
-    'http://127.0.0.1:3001',
-    process.env.NEXT_PUBLIC_SITE_URL,
-    process.env.FRONTEND_URL,
-  ].filter(Boolean),
+  allowedOrigins: ['http://localhost:3000', process.env.NEXT_PUBLIC_SITE_URL].filter(Boolean),
 
   allowedMethods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 
