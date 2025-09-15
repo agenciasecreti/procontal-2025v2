@@ -1,20 +1,20 @@
 'use client';
 
-import Image from 'next/image';
+import { NavLink } from '@/components/nav-link';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { SiWhatsapp } from '@icons-pack/react-simple-icons';
-import { Phone } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
 } from '@/components/ui/navigation-menu';
-import { NavLink } from '@/components/nav-link';
 import { Separator } from '@/components/ui/separator';
 import { useContactConfig, useSiteConfig } from '@/contexts/config-context';
 import { trackClickButton } from '@/lib/tracking';
+import { SiWhatsapp } from '@icons-pack/react-simple-icons';
+import { Phone } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Footer() {
   const { whatsapp, phone, address } = useContactConfig();
@@ -42,6 +42,7 @@ export default function Footer() {
               width={160}
               height={40}
               className="h-auto w-50"
+              priority={true}
             />
             <p className="text-center text-sm text-balance lg:text-start">
               A Procontal Treinamentos oferece formações presenciais de alta qualidade, focadas no

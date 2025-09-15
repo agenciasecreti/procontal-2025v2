@@ -1,48 +1,32 @@
 'use client';
 
-import Link from 'next/link';
-import { Geist, Geist_Mono } from 'next/font/google';
 import { Button } from '@/components/ui/button';
-import { ThemeProvider } from '@/components/theme-provider';
-import './globals.css';
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
+import { useThemeHook } from '@/hooks/use-theme';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function NotFound() {
+  const { theme, mounted } = useThemeHook();
+
   return (
-    <html
-      lang="pt-BR"
-      className={`${geistSans.variable} ${geistMono.variable}`}
-      suppressHydrationWarning
-    >
-      <body className={`antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        ></ThemeProvider>
-        <div className="bg-background flex min-h-screen flex-col items-center justify-center">
-          {process.env.NEXT_PUBLIC_SITE_TITLE}
-          <div className="text-center">
-            <h1 className="text-quaternary mb-4 text-3xl font-bold">Página Não Encontrada</h1>
-            <p>Desculpe, a página que você está procurando não existe.</p>
-          </div>
-          <Link href="/" className="text-md p-6 font-bold">
-            <Button variant="secondary" className="mt-6">
-              Voltar para o início
-            </Button>
-          </Link>
-        </div>
-      </body>
-    </html>
+    <div className="from-primary to-secondary text-primary-foreground flex h-full w-full flex-col items-center justify-center gap-15 bg-gradient-to-br p-10">
+      <Image
+        src={mounted && theme === 'dark' ? '/logo-d.webp' : '/logo-l.webp'}
+        alt="Procontal Treinamentos"
+        width={160}
+        height={40}
+        className="h-auto w-100"
+        priority={true}
+      />
+      <div className="text-center">
+        <h1 className="text-quaternary mb-4 text-3xl font-bold">Página Não Encontrada</h1>
+        <p>Desculpe, a página que você está procurando não existe.</p>
+      </div>
+      <Button className="bg-quaternary text-quaternary-foreground hover:bg-tertiary/90 dark:bg-tertiary dark:hover:bg-quaternary/90 dark:text-tertiary-foreground transition-colors duration-300">
+        <Link href="/" className="text-md p-6 font-bold">
+          Voltar para a página inicial
+        </Link>
+      </Button>
+    </div>
   );
 }

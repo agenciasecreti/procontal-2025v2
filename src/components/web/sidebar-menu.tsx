@@ -1,17 +1,17 @@
 'use client';
 
-import { useState } from 'react';
-import { Menu } from 'lucide-react';
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
-import Image from 'next/image';
-import { Separator } from '@/components/ui/separator';
+import { NavLink } from '@/components/nav-link';
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
 } from '@/components/ui/navigation-menu';
-import { NavLink } from '@/components/nav-link';
+import { Separator } from '@/components/ui/separator';
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Menu } from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
 
 export default function SidebarMenu({
   items = [],
@@ -43,7 +43,7 @@ export default function SidebarMenu({
             />
           </div>
           <Separator className="border-accent/50 my-3" />
-          <NavigationMenu viewport={false} className="px-10">
+          <NavigationMenu viewport={false} className="items-start px-10">
             <NavigationMenuList className="grid h-full grid-cols-1 gap-1">
               {items.map((item) => (
                 <NavigationMenuItem key={item.href} className="min-w-20">

@@ -29,7 +29,7 @@ export const GET = async (req: NextRequest) => {
   }
 
   if (!accessToken) {
-    return ApiResponse.authorizationError('Token de acesso não encontrado');
+    return ApiResponse.success(null, 'Nenhum usuário autenticado');
   }
 
   // Extrair userId do token para cache

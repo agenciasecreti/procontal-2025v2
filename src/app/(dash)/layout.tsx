@@ -50,15 +50,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           }}
         />
 
-        {/* Preload de recursos críticos */}
-        <link
-          rel="preload"
-          href="/fonts/OpenSans-Regular.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-
         {/* Resource hints */}
         <ResourceHints />
       </head>
@@ -73,8 +64,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </AuthProvider>
         </ClientConfigProvider>
         <ConsentManager />
-        <Analytics />
-        <SpeedInsights />
+        {process.env.NODE_ENV === 'production' && (
+          <>
+            <Analytics />
+            <SpeedInsights />
+          </>
+        )}
       </body>
     </html>
   );

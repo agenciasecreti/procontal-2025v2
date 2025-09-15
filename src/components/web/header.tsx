@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { NavLink } from '@/components/nav-link';
+import { motion } from 'framer-motion';
 
 import {
   NavigationMenu,
@@ -9,12 +9,12 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from '@/components/ui/navigation-menu';
-import Link from 'next/link';
 import ModeToggle from '@/components/web/mode-toggle';
 import SidebarMenu from '@/components/web/sidebar-menu';
-import { useEffect, useState } from 'react';
 import { useContactConfig } from '@/contexts/config-context';
 import { trackClickWhatsapp } from '@/lib/tracking';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Header({ bar = false }: { bar?: boolean }) {
   const { whatsapp } = useContactConfig();
@@ -73,7 +73,7 @@ export default function Header({ bar = false }: { bar?: boolean }) {
                   <NavigationMenuItem key={item.href}>
                     <NavigationMenuLink
                       asChild
-                      className={`dark:hover:text-primary focus:bg-tertiary focus:text-tertiary-foreground dark:focus:bg-secondary dark:focus:text-secondary-foreground active:bg-tertiary active:text-tertiary-foreground dark:active:bg-secondary dark:active:text-secondary-foreground hover:text-quaternary cursor-pointer font-bold text-shadow-lg hover:bg-transparent focus:text-shadow-none active:text-shadow-none ${item.highlight ? 'text-tertiary dark:text-secondary' : ''} `}
+                      className={`dark:hover:text-primary focus:bg-tertiary focus:text-tertiary-foreground dark:focus:bg-secondary dark:focus:text-secondary-foreground active:bg-tertiary active:text-tertiary-foreground dark:active:bg-secondary dark:active:text-secondary-foreground hover:text-quaternary cursor-pointer items-start font-bold text-shadow-lg hover:bg-transparent focus:text-shadow-none active:text-shadow-none ${item.highlight ? 'text-tertiary dark:text-secondary' : ''} `}
                     >
                       <NavLink href={item.href}>{item.label}</NavLink>
                     </NavigationMenuLink>

@@ -45,10 +45,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     >
       <head>
         {/* Google Analytics */}
-        <GoogleAnalytics />
+        {process.env.NODE_ENV === 'production' && <GoogleAnalytics />}
 
         {/* Google Tag Manager */}
-        <GoogleTagManager />
+        {process.env.NODE_ENV === 'production' && <GoogleTagManager />}
 
         {/* Critical CSS inline */}
         <style
@@ -64,22 +64,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           }}
         />
 
-        {/* Preload de recursos críticos */}
-        <link
-          rel="preload"
-          href="/fonts/OpenSans-Regular.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-
         {/* Resource hints */}
-        <ResourceHints />
+        {process.env.NODE_ENV === 'production' && <ResourceHints />}
       </head>
 
-      <body className={`antialiased`}>
-        {/* GTM NoScript */}
-        <GoogleTagManagerNoScript />
+      <body className={`h-full w-full antialiased`}>
+        {process.env.NODE_ENV === 'production' && <GoogleTagManagerNoScript />}
         <ClientConfigProvider>
           <ThemeProvider
             attribute="class"
@@ -94,8 +84,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </ThemeProvider>
         </ClientConfigProvider>
         <ConsentManager />
-        <Analytics />
-        <SpeedInsights />
+        {process.env.NODE_ENV === 'production' && <Analytics />}
+        {process.env.NODE_ENV === 'production' && <SpeedInsights />}
       </body>
     </html>
   );

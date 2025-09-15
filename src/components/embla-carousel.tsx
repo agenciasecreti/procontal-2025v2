@@ -32,8 +32,6 @@ const EmblaCarousel = ({
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi, onNavButtonClick);
 
-  console.log('slides:', slides);
-
   const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } =
     usePrevNextButtons(emblaApi, onNavButtonClick);
 
@@ -65,7 +63,6 @@ const EmblaCarousel = ({
                           alt={banner.title || 'Procontal Treinamentos'}
                           width={1920}
                           height={1080}
-                          quality={85}
                           priority={true} // Para primeira imagem
                           sizes="100vw"
                           cacheKey="v1" // Versão para cache busting
@@ -79,7 +76,6 @@ const EmblaCarousel = ({
                           alt={banner.title || 'Procontal Treinamentos'}
                           width={768}
                           height={1024}
-                          quality={85}
                           priority={true}
                           sizes="100vw"
                           cacheKey="v1"
