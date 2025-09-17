@@ -1,16 +1,16 @@
 import ApiResponse from '@/lib/api-response';
-import { verifyAuth } from '@/lib/auth';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import nodemailer from 'nodemailer';
 
 export async function POST(req: NextRequest) {
   const { to, from, subject, message, internal } = await req.json();
 
   // Verifica a autenticação apenas se não for uma chamada interna
-  if (!internal) {
-    const authResult = await verifyAuth(req);
-    if (authResult instanceof NextResponse) return authResult;
-  }
+  // if (!internal) {
+  //   const authResult = await verifyAuth(req);
+  //   if (authResult instanceof NextResponse) return authResult;
+  // }
+  console.log(to, from, subject, message, internal);
 
   if (!to || !from || !subject || !message) {
     return ApiResponse.validationError(
