@@ -56,8 +56,8 @@ export const config = {
   smtp: {
     host: process.env.SMTP_HOST || 'sandbox.smtp.mailtrap.io',
     port: parseInt(process.env.SMTP_PORT || '2525'),
-    user: process.env.SMTP_USER || '',
-    password: process.env.SMTP_PASSWORD || '',
+    user: process.env.SMTP_USER || 'c5d5c1ecbe150d',
+    password: process.env.SMTP_PASSWORD || 'c350889c93115f',
     from: {
       name: process.env.SMTP_FROM_NAME || 'SecreTI',
       email: process.env.SMTP_FROM_EMAIL || 'contato@secreti.com.br',

@@ -14,7 +14,7 @@ import { toast } from 'sonner';
 const ResetForm = ({ className, ...props }: React.ComponentProps<'div'>) => {
   const [email, setEmail] = useState('');
   const router = useRouter();
-  const { user, isAuthenticated, isLoading, checkAuth } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
 
   // Redirecionar se já estiver logado
   useEffect(() => {
@@ -68,8 +68,8 @@ const ResetForm = ({ className, ...props }: React.ComponentProps<'div'>) => {
 
       setEmail('');
 
-      // Verifica auth após login bem-sucedido
-      await checkAuth();
+      //redireciona para o login
+      router.push('/redefinir-senha');
     } catch (error) {
       toast.error('Erro ao solicitar redefinição de senha', {
         description: error instanceof Error ? error.message : 'Erro desconhecido',

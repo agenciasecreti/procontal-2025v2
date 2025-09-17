@@ -1,3 +1,4 @@
+import GeneralMessage from '@/components/mail/general-message';
 import ApiResponse from '@/lib/api-response';
 import prisma from '@/lib/prisma';
 import { NextRequest } from 'next/server';
@@ -43,24 +44,37 @@ export async function POST(req: NextRequest) {
   if (!updateUser)
     return ApiResponse.internalServerError('Erro ao gerar o código de redefinição de senha.');
 
+  const form = {
+    subject: `[${process.env.NEXT_PUBLIC_SITE_NAME}] E-mail de redefinição de senha`,
+    to: user.email,
+    from: process.env.SMTP_FROM_EMAIL,
+    name: '',
+    phone: '',
+    email: '',
+    message: `<p>Olá ${user.name},</p>
+                <p>Você solicitou a redefinição de sua senha. Para continuar, utilize o código abaixo:</p>
+                <p style="text-align: center;"><b style="font-size: 24px;">${code}</b></p>
+                <p>Acesse o link para <a href="${process.env.NEXT_PUBLIC_SITE_URL}/redefinir-senha">REDEFINIR SENHA</a>.</p>
+                <p>Se você não solicitou esta redefinição, por favor ignore este e-mail.</p>
+                <p>Atenciosamente,</p>
+                <p>${process.env.NEXT_PUBLIC_SITE_NAME}</p>`,
+  };
+
   try {
+    const htmlMessage = GeneralMessage({ form });
     const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/sendmail`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        to: user.email,
-        from: process.env.SMTP_FROM_EMAIL,
-        subject: `[${process.env.NEXT_PUBLIC_SITE_NAME}] E-mail de redefinição de senha`,
-        message: `<p>Olá ${user.name},</p>
-                       <p>Você solicitou a redefinição de sua senha. Para continuar, utilize o código <b style="font-size: 24px;">${code}</b>, usando o seguinte link:</p>
-                       <p><a href="${process.env.NEXT_PUBLIC_SITE_URL}/redefinir-senha">Redefinir Senha</a></p>
-                       <p>Se você não solicitou esta redefinição, por favor ignore este e-mail.</p>
-                       <p>Atenciosamente,</p>
-                       <p>${process.env.NEXT_PUBLIC_SITE_NAME}</p>`,
+        to: form.to,
+        from: form.from,
+        subject: form.subject,
+        message: htmlMessage,
         internal: true, // Indica que é uma chamada interna, não requer autenticação
       }),
     });
+
     const { data, success, error } = await res.json();
+
     if (!success) {
       return ApiResponse.internalServerError('Erro ao enviar o e-mail.', {
         details: error.message || data || 'Erro desconhecido',

@@ -42,15 +42,7 @@ export default function Contact() {
 
       const { success, data, error } = await res.json();
 
-      if (success) {
-        trackFormSubmit('contact-form', true);
-        setStatus({
-          message: data.message || 'Mensagem enviada com sucesso!',
-          type: 'success',
-        });
-        setLoading(false);
-        setForm({ ...form, name: '', phone: '', email: '', message: '', from: '' }); // Limpa o formulário após o envio
-      } else {
+      if (!success) {
         trackFormSubmit('contact-form', false);
         setLoading(false);
         setStatus({
@@ -58,11 +50,22 @@ export default function Contact() {
           type: 'error',
         });
       }
+
+      trackFormSubmit('contact-form', true);
+      setStatus({
+        message: data.message || 'Mensagem enviada com sucesso!',
+        type: 'success',
+      });
+      setLoading(false);
+      setForm({ ...form, name: '', phone: '', email: '', message: '', from: '' }); // Limpa o formulário após o envio
     } catch (error) {
-      console.error('Erro ao enviar mensagem:', error);
       trackFormSubmit('contact-form', false);
       setLoading(false);
-      setStatus({ message: 'Erro ao enviar mensagem. Tente novamente.', type: 'error' });
+      setStatus({
+        message:
+          error instanceof Error ? error.message : 'Erro ao enviar mensagem. Tente novamente.',
+        type: 'error',
+      });
     }
   };
 
