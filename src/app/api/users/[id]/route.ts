@@ -19,6 +19,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
   const { id } = await params;
   const join = req.nextUrl.searchParams.get('join')?.split(',') || [];
+  const select = req.nextUrl.searchParams.get('select') || '';
 
   type UserDetail = User & {
     role?: Role | null;
@@ -30,17 +31,64 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   let role: Role | null = null;
   let posts: Post[] | null = null;
   let courses: CourseUser[] | null = null;
+  let columns = {} as Record<string, boolean | { select: Record<string, boolean> }>;
+
+  if (select) {
+    columns = select
+      .split(',')
+      .reduce(
+        (acc: Record<string, boolean | { select: Record<string, boolean> }>, field: string) => {
+          // Verifica se o campo é válido e não vazio
+          if (field && field.trim()) {
+            // Se o campo contém um ponto, trata como um relacionamento aninhado
+            if (field.split('.').length > 1) {
+              const key = field.trim().split('.')[0];
+              const subfield = field.trim().split('.')[1];
+              const prev = acc[key];
+              acc[key] = {
+                select: {
+                  ...(typeof prev === 'object' && prev !== null && 'select' in prev
+                    ? prev.select
+                    : {}),
+                  [subfield]: true,
+                },
+              };
+            } else {
+              acc[field.trim()] = true;
+            }
+          }
+          return acc;
+        },
+        {}
+      );
+  } else {
+    // Seleciona os campos padrão se nenhum campo específico for solicitado
+    columns = {
+      id: true,
+      name: true,
+      email: true,
+      role_id: true,
+      whatsapp: true,
+      avatar: true,
+    };
+  }
+
+  // Garantir que role_id esteja sempre incluído quando role for solicitado
+  if (join.includes('role') && !columns.role_id) {
+    columns.role_id = true;
+  }
 
   try {
     // Consulta o usuário no banco de dados
-    user = await prisma.user.findUnique({
+    user = (await prisma.user.findUnique({
+      select: columns,
       where: {
         id: parseInt(id), //pelo ID do usuário
         deleted_at: null, //verifica se o usuário não foi deletado
       },
-    });
+    })) as UserDetail | null;
 
-    if (join.includes('role') && user) {
+    if (join.includes('role') && user && user.role_id) {
       role = await prisma.role.findUnique({
         where: { id: user.role_id, deleted_at: null },
       });

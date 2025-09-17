@@ -26,30 +26,50 @@ type CoursePivot = {
 
 // Função para buscar dados do usuário via nossa API segura
 const fetchUser = async (id: number) => {
-  const res = await fetch('/api/user/details', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id }),
-  });
+  try {
+    const res = await fetch(`/api/users/${id}?join=courses`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      redirect: 'follow',
+    });
 
-  if (!res.ok) {
-    console.error('Erro ao buscar dados do usuário:', res);
-    throw new Error('Failed to fetch user');
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const { data, success, error } = await res.json();
+    if (!success) {
+      throw new Error(error?.message || 'Failed to fetch user data');
+    }
+    return data;
+  } catch (err) {
+    console.error('Erro na fetchUser:', err);
+    throw err;
   }
-  return res.json();
 };
 
 // Função para buscar arquivos do curso via nossa API segura
 const fetchFilesCourse = async (folder: string) => {
-  const res = await fetch('/api/courses/files', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ folder }),
-  });
-  if (!res.ok) {
-    throw new Error('Failed to fetch files');
+  try {
+    const res = await fetch(`/api/filesystem?folder=${encodeURIComponent(folder.trim())}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      redirect: 'follow',
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const { data, success, error } = await res.json();
+    if (!success) {
+      throw new Error(error?.message || 'Failed to fetch course files');
+    }
+    return data;
+  } catch (err) {
+    console.error('Erro na fetchFilesCourse:', err);
+    throw err;
   }
-  return res.json();
 };
 
 export default function CoursesDrives() {
@@ -78,9 +98,9 @@ export default function CoursesDrives() {
       setLoading(true);
       try {
         const userData = await fetchUser(Number(user.id));
-        setUserDetails(userData.data);
+        setUserDetails(userData);
 
-        const firstActiveCourse = userData.data.courses.find((c: CoursePivot) => c.active);
+        const firstActiveCourse = userData.courses.find((c: CoursePivot) => c.active);
         if (firstActiveCourse) {
           await handleTabChange(firstActiveCourse.course.slug);
         } else {
