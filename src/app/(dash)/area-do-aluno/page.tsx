@@ -7,7 +7,7 @@ import { HomeAreaAluno } from './components/home';
 export async function generateMetadata(): Promise<Metadata> {
   return generateSEOMetadata({
     title: `Área do Aluno`,
-    description: `Acesse sua Área do Aluno na ${process.env.NEXT_PUBLIC_SITE_TITLE} para gerenciar seus cursos e informações.`,
+    description: `Acesse sua Área do Aluno na ${process.env.NEXT_PUBLIC_SITE_NAME} para gerenciar seus cursos e informações.`,
     type: 'website',
   });
 }

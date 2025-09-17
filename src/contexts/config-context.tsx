@@ -51,7 +51,7 @@ export function ConfigProvider({ children, initialConfig = {} }: ConfigProviderP
 
       // Em caso de erro, usa configurações padrão
       setConfig({
-        'site.title': process.env.NEXT_PUBLIC_SITE_TITLE || '',
+        'site.title': process.env.NEXT_PUBLIC_SITE_NAME || '',
         'site.description': process.env.NEXT_PUBLIC_SITE_DESCRIPTION || '',
         'contact.whatsapp': process.env.NEXT_PUBLIC_CONTACT_WHATSAPP || '',
         'contact.phone': process.env.NEXT_PUBLIC_CONTACT_PHONE || '',
@@ -109,7 +109,7 @@ export function useSiteConfig() {
   const { getConfig } = useConfig();
 
   return {
-    title: getConfig('site.title', process.env.NEXT_PUBLIC_SITE_TITLE) as string,
+    title: getConfig('site.title', process.env.NEXT_PUBLIC_SITE_NAME) as string,
     description: getConfig('site.description', process.env.NEXT_PUBLIC_SITE_DESCRIPTION) as string,
     url: getConfig('site.url', process.env.NEXT_PUBLIC_SITE_URL) as string,
     keywords: getConfig('site.keywords', process.env.NEXT_PUBLIC_SITE_KEYWORDS) as string,
