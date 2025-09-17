@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Input, InputPwd } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/use-auth';
 import { cn } from '@/lib/utils';
@@ -106,9 +106,8 @@ const LoginForm = ({ className, ...props }: React.ComponentProps<'div'>) => {
                     Esqueceu sua senha?
                   </Link>
                 </div>
-                <Input
+                <InputPwd
                   id="password"
-                  type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required

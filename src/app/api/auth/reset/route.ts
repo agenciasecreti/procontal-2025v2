@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     return ApiResponse.internalServerError('Erro ao gerar o código de redefinição de senha.');
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/sendmail`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/sendmail`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -57,13 +57,14 @@ export async function POST(req: NextRequest) {
                        <p>Se você não solicitou esta redefinição, por favor ignore este e-mail.</p>
                        <p>Atenciosamente,</p>
                        <p>${process.env.NEXT_PUBLIC_SITE_NAME}</p>`,
+        internal: true, // Indica que é uma chamada interna, não requer autenticação
       }),
     });
-    if (!response.ok) {
-      console.error('Erro ao enviar o e-mail:', {
-        details: `Status Code: ${response.status} - ${response.statusText}`,
+    const { data, success, error } = await res.json();
+    if (!success) {
+      return ApiResponse.internalServerError('Erro ao enviar o e-mail.', {
+        details: error.message || data || 'Erro desconhecido',
       });
-      return ApiResponse.internalServerError('Erro ao enviar o e-mail.');
     }
   } catch (error) {
     return ApiResponse.internalServerError('Erro ao enviar o e-mail.', {
