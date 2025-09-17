@@ -55,7 +55,6 @@ export async function middleware(req: NextRequest) {
         return rateLimitResult;
       }
     }
-
     // Para APIs, apenas aplicamos segurança e rate limiting, não autenticação
     return corsResponse;
   }
