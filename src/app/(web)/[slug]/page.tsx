@@ -35,7 +35,11 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+interface PageProps {
+  params: { slug: string };
+}
+
+export default async function Page({ params }: PageProps) {
   const post = await fetchPost({ id: params.slug });
 
   return (
