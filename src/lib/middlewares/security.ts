@@ -15,11 +15,11 @@ export const securityHeaders = {
   'Content-Security-Policy': [
     "default-src 'self'",
     "frame-src 'self' https://cdn.ckeditor.com https://www.youtube.com",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.ckeditor.com https://va.vercel-scripts.com https://vitals.vercel-insights.com",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.ckeditor.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://www.googletagmanager.com https://www.google-analytics.com",
     "style-src 'self' 'unsafe-inline' https://cdn.ckeditor.com",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data: https://cdn.ckeditor.com",
-    "connect-src 'self' https://cdn.ckeditor.com https://proxy-event.ckeditor.com https://vitals.vercel-insights.com",
+    "connect-src 'self' https://cdn.ckeditor.com https://proxy-event.ckeditor.com https://vitals.vercel-insights.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com",
     "media-src 'self'",
     "object-src 'none'",
     "base-uri 'self'",
