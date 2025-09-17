@@ -26,8 +26,13 @@ const fetchPost = async ({ id }: { id: number | string }) => {
 };
 
 // Metadata dinâmica baseada nos dados da API
-export async function generateMetadata(): Promise<Metadata> {
-  const post = await fetchPost({ id: 'quem-somos' });
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await fetchPost({ id: slug });
   return generateSEOMetadata({
     title: post?.id ? post.title : undefined,
     description: post?.id ? post.lead : undefined,
@@ -35,12 +40,9 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-interface PageProps {
-  params: { slug: string };
-}
-
-export default async function Page({ params }: PageProps) {
-  const post = await fetchPost({ id: params.slug });
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await fetchPost({ id: slug });
 
   return (
     <div className="bg-tertiary/10 bg-1 flex min-h-full w-full flex-col justify-between">
