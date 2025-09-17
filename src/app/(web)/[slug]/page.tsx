@@ -12,10 +12,10 @@ const fetchPost = async ({ id }: { id: number | string }) => {
       method: 'GET',
     });
 
-    const { success, data, error } = await res.json();
+    const { success, data } = await res.json();
     if (!success) {
-      console.error('Erro ao buscar post:', error);
-      return null; // Retorna null se a API indicar falha
+      //redirecione para a pagina de erro not found
+      return null;
     }
 
     return data;
@@ -32,7 +32,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = await fetchPost({ id: slug });
+  const post = await fetchPost({ id: slug }).catch(() => null);
   return generateSEOMetadata({
     title: post?.id ? post.title : undefined,
     description: post?.id ? post.lead : undefined,
