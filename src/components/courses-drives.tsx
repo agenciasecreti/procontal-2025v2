@@ -78,9 +78,9 @@ export default function CoursesDrives() {
   const [userDetails, setUserDetails] = useState<{ courses: CoursePivot[] }>({ courses: [] });
   const [loading, setLoading] = useState(true);
 
-  const handleTabChange = useCallback(async (courseSlug: string) => {
+  const handleTabChange = useCallback(async (courseId: number) => {
     try {
-      const data = await fetchFilesCourse(`courses/${courseSlug}/files`);
+      const data = await fetchFilesCourse(`courses/${courseId}/files`);
       setFiles(data.files || []);
     } catch (err) {
       console.error('Erro ao buscar arquivos:', err);
@@ -102,7 +102,7 @@ export default function CoursesDrives() {
 
         const firstActiveCourse = userData.courses.find((c: CoursePivot) => c.active);
         if (firstActiveCourse) {
-          await handleTabChange(firstActiveCourse.course.slug);
+          await handleTabChange(firstActiveCourse.course.id);
         } else {
           setFiles([]);
         }
@@ -133,7 +133,7 @@ export default function CoursesDrives() {
                     <TabsTrigger
                       key={pivot.course.id}
                       value={pivot.course.slug}
-                      onClick={() => handleTabChange(pivot.course.slug)}
+                      onClick={() => handleTabChange(pivot.course.id)}
                       className="p-8 text-2xl font-bold"
                     >
                       {pivot.course.title}
