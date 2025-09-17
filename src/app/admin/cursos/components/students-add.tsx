@@ -12,8 +12,8 @@ type User = {
   name: string;
 };
 
-const updateAddUser = async (courseId: number, user: User) => {
-  const res = await fetch(`/api/courses/${courseId}/users`, {
+const updateAddUser = async (id: number, user: User) => {
+  const res = await fetch(`/api/courses/${id}/users`, {
     method: 'POST',
     body: JSON.stringify({ userId: user.id }),
   });
@@ -48,7 +48,7 @@ export default function AddUser({
     const timeout = setTimeout(async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/users/search?search=${encodeURIComponent(query.trim())}`);
+        const res = await fetch(`/api/users?search=${encodeURIComponent(query.trim())}`);
         const { data } = await res.json();
         setUsers(data);
       } catch (err) {

@@ -48,7 +48,7 @@ export default function AddTeacher({
     const timeout = setTimeout(async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/teachers/search?search=${encodeURIComponent(query.trim())}`);
+        const res = await fetch(`/api/teachers?search=${encodeURIComponent(query.trim())}`);
         const { data, success, error } = await res.json();
         if (!success) {
           console.error('Erro ao buscar professores:', error);

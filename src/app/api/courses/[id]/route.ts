@@ -14,9 +14,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // @route GET /api/courses/[id]
 // Retorna os dados de um course específico.
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  // Verifica a autenticação do usuário
-  const authResult = await verifyAuth(req);
-  if (authResult instanceof NextResponse) return authResult;
+  //Rota pública, não necessita de autenticação
 
   const { id } = await params;
   const join = req.nextUrl.searchParams.get('join')?.split(',') || [];

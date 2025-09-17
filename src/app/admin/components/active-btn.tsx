@@ -16,7 +16,7 @@ export function ActiveBtn({ id, table, active, onChange }: ActiveBtnProps) {
 
   const handleActive = () => {
     setLoading(true);
-    fetch(`/api/${table}/${id}`, {
+    fetch(`/api/${table}/${id}/active`, {
       method: 'PUT',
       body: JSON.stringify({ active: !active ? true : false }),
       headers: {

@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 
 export default function Header({ bar = false }: { bar?: boolean }) {
   const { whatsapp } = useContactConfig();
+
   //limpa o número de WhatsApp para remover caracteres especiais
   const cleanWhatsapp = whatsapp.replace(/\D/g, '');
   const whatsappUrl = `https://api.whatsapp.com/send/?phone=+55${cleanWhatsapp}&text=Olá! Tenho interesse nos cursos da Procontal Treinamentos`;

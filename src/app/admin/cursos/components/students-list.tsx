@@ -17,28 +17,28 @@ type UsersListProps = User & {
 };
 
 type FetchParams = {
-  courseId: number;
+  id: number;
   page: number;
   search?: string;
   limit?: number;
 };
 
 // Função para buscar cursos com base na página e na pesquisa
-const fetchUsersCourse = async ({ courseId, page, search = '', limit = 10 }: FetchParams) => {
+const fetchUsersCourse = async ({ id, page, search = '', limit = 10 }: FetchParams) => {
   const params = new URLSearchParams({
     page: page.toString(),
     limit: limit.toString(),
     search: search,
   });
 
-  const response = await fetch(`/api/courses/${courseId}/users?${params.toString()}`);
+  const response = await fetch(`/api/courses/${id}/users?${params.toString()}`);
   const { data, pagination, success, error } = await response.json();
   if (!success) toast.error(error.message || 'Erro ao buscar usuários do curso.');
   else return { data, pagination };
 };
 
-const removeUsersCourse = async (courseId: number, user: User) => {
-  const res = await fetch(`/api/courses/${courseId}/users`, {
+const removeUsersCourse = async (id: number, user: User) => {
+  const res = await fetch(`/api/courses/${id}/users`, {
     method: 'DELETE',
     body: JSON.stringify({ userId: user.id }),
   });
@@ -114,9 +114,9 @@ export function UsersList({ course_id }: { course_id: number }) {
               onClick={() => handleEditUser(user, user.courses[0].active === true ? false : true)}
             >
               {user.courses[0].active ? (
-                <ThumbsUp className="text-ring h-4 w-4" />
+                <ThumbsUp className="h-4 w-4 text-green-600" />
               ) : (
-                <ThumbsDown className="text-destructive h-4 w-4" />
+                <ThumbsDown className="h-4 w-4 text-red-600" />
               )}
             </Button>
           </div>
@@ -142,7 +142,7 @@ export function UsersList({ course_id }: { course_id: number }) {
   const handleGetUsers = useCallback(async () => {
     try {
       const res = await fetchUsersCourse({
-        courseId: course_id,
+        id: course_id,
         page: pagination.page,
         search: search,
         limit: pagination.limit,

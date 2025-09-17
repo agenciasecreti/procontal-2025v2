@@ -23,7 +23,7 @@ const fetchUsers = async ({ page, search = '', limit = 10 }: FetchParams) => {
     search: search,
   });
 
-  const response = await fetch(`/api/users/search?${params.toString()}`);
+  const response = await fetch(`/api/users?${params.toString()}`);
   const { data, pagination, success, error } = await response.json();
   if (!success) throw new Error(error.message || 'Erro ao buscar usuários');
   return { data, pagination };

@@ -28,7 +28,7 @@ const fetchCourses = async ({ page, search = '', limit = 10, active }: FetchPara
     params.append('active', String(active));
   }
 
-  const response = await fetch(`/api/courses/search?${params.toString()}`);
+  const response = await fetch(`/api/courses?${params.toString()}`);
   const { data, pagination, success, error } = await response.json();
   if (!success) throw new Error(error.message || 'Erro ao buscar cursos');
   return { data, pagination };

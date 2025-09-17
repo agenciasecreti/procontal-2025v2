@@ -245,7 +245,7 @@ export function FilesList({ course_id }: { course_id: number }) {
                     </span>
                     <span>
                       <Button variant="ghost" size="sm" onClick={() => removeDropFile(file)}>
-                        <Trash2 className="text-destructive h-4 w-4" />
+                        <Trash2 className="h-4 w-4 text-red-600" />
                       </Button>
                     </span>
                   </div>

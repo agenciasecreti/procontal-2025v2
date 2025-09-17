@@ -53,9 +53,9 @@ function CourseActions({ course, refresh }: { course: CourseData; refresh?: () =
                 e.stopPropagation();
                 setDeleteDialogOpen(true);
               }}
-              className="text-destructive focus:text-destructive flex items-center gap-3"
+              className="text-red-600 focus:text-red-600 flex items-center gap-3"
             >
-              <Trash2 className="text-destructive" /> Excluir
+              <Trash2 className="text-red-600" /> Excluir
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

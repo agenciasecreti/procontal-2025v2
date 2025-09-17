@@ -33,7 +33,7 @@ export default function SelectUser({
     const timeout = setTimeout(async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/users/search?search=${encodeURIComponent(query.trim())}`);
+        const res = await fetch(`/api/users?search=${encodeURIComponent(query.trim())}`);
         const { data } = await res.json();
         setUsers(data);
       } catch (err) {

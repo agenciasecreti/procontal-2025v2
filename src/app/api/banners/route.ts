@@ -23,7 +23,6 @@ export async function GET(req: NextRequest) {
   const page = parseInt(req.nextUrl.searchParams.get('page') || '1');
   const search = req.nextUrl.searchParams.get('search') || '';
   const select = req.nextUrl.searchParams.get('select') || '';
-  console.log('select:', select);
   const position = req.nextUrl.searchParams.get('position') || '';
   const active =
     req.nextUrl.searchParams.get('active') !== null

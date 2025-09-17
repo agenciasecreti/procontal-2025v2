@@ -98,14 +98,21 @@ export default function ShowPage({ params }: { params: Promise<{ id: string }> }
                       />
                     </div>
                     {course.modules && course.modules.length > 0 && (
-                      <div>
+                      <div className="col-span-2 lg:col-span-4">
                         <p className="mb-2">
                           <strong>Módulos:</strong>
                         </p>
-                        <div className="prose rounded-lg border p-5">
+                        <div className="prose w-full rounded-lg border p-5">
                           {course.modules?.map((module, index) => (
                             <ul key={index} className="mx-10 list-disc">
-                              <li>{module.title}</li>
+                              <li>
+                                <Link
+                                  href={`${Feature.url}/${id}/modulos/${module.id}/editar`}
+                                  className="text-primary hover:text-secondary"
+                                >
+                                  {module.title}
+                                </Link>
+                              </li>
                             </ul>
                           ))}
                         </div>

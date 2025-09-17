@@ -148,6 +148,8 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 // @route DELETE /api/banners/[id]
 // Marca um banner como deletado, definindo a data de exclusão.
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  // Rotina protegida pelo middleware CORS - permite acesso apenas do próprio app
+
   const { id } = await params;
 
   // Verifica a autenticação do usuário

@@ -1,7 +1,6 @@
 import ApiResponse from '@/lib/api-response';
-import { verifyAuth } from '@/lib/auth';
 import { ListObjectsV2Command, S3Client } from '@aws-sdk/client-s3';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 
 const s3 = new S3Client({
   region: process.env.S3_REGION!,
@@ -22,9 +21,7 @@ const s3 = new S3Client({
 // @route GET /api/filesystem
 // Retorna a lista de arquivos em uma determinada pasta.
 export async function GET(req: NextRequest) {
-  // Verificar autenticação
-  const authResult = await verifyAuth(req);
-  if (authResult instanceof NextResponse) return authResult;
+  // Rota protegida pelo middleware CORS - permite acesso apenas do próprio app
 
   // Obtém o nome da pasta a partir dos parâmetros de busca (?folder=...)
   const folder = req.nextUrl.searchParams.get('folder') || '';

@@ -68,9 +68,9 @@ function UserActions({ user, refresh }: { user: UserData; refresh?: () => void }
                 e.stopPropagation();
                 setDeleteDialogOpen(true);
               }}
-              className="text-destructive focus:text-destructive flex items-center gap-3"
+              className="flex items-center gap-3 text-red-600 focus:text-red-600"
             >
-              <Trash2 className="text-destructive" /> Excluir
+              <Trash2 className="text-red-600" /> Excluir
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

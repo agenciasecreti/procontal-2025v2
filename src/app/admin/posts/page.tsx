@@ -29,7 +29,7 @@ const fetchPosts = async ({ page, search = '', limit = 10, active }: FetchParams
     params.append('active', String(active));
   }
 
-  const response = await fetch(`/api/posts/search?${params.toString()}`);
+  const response = await fetch(`/api/posts?${params.toString()}`);
   const { data, pagination, success, error } = await response.json();
   if (!success) throw new Error(error.message || 'Erro ao buscar posts');
   return { data, pagination };
@@ -86,7 +86,7 @@ export default function AdminPostsPage() {
         <Card className="@container/card col-span-3">
           <CardHeader>
             <CardTitle>Lista de Posts</CardTitle>
-            <CardDescription>Lista de todos os posts.</CardDescription>
+            <CardDescription>Lista de todos os postss.</CardDescription>
             <CardAction>
               <Link href={`${Feature.url}/criar`}>
                 <Button variant="secondary">Criar</Button>

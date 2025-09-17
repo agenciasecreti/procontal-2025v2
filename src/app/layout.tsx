@@ -4,11 +4,11 @@ import {
   GoogleTagManager,
   GoogleTagManagerNoScript,
 } from '@/components/analytics/google-tag-manager';
-import { ClientConfigProvider } from '@/components/client-config-provider';
 import metaConfig, { viewportConfig } from '@/components/config/metadata';
 import { ResourceHints } from '@/components/resource-hints';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
+import { ConfigProvider } from '@/contexts/config-context';
 import { AuthProvider } from '@/hooks/use-auth';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -70,7 +70,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
       <body className={`h-full w-full antialiased`}>
         {process.env.NODE_ENV === 'production' && <GoogleTagManagerNoScript />}
-        <ClientConfigProvider>
+        <ConfigProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -82,7 +82,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               {children}
             </AuthProvider>
           </ThemeProvider>
-        </ClientConfigProvider>
+        </ConfigProvider>
         <ConsentManager />
         {process.env.NODE_ENV === 'production' && <Analytics />}
         {process.env.NODE_ENV === 'production' && <SpeedInsights />}
