@@ -1,9 +1,9 @@
 'use client';
 
-import CoursesDrives from '@/components/courses-drives';
 import LogoutBtn from '@/components/logout-btn';
 import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/hooks/use-auth';
+import CoursesDrives from './courses-drives';
 
 export const HomeAreaAluno = () => {
   const { user } = useAuth();

@@ -4,7 +4,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { Download } from 'lucide-react';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../../../components/ui/tabs';
 
 type FileType = {
   url: string;
