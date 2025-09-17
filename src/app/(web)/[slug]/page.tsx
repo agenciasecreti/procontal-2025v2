@@ -35,8 +35,8 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default async function Page() {
-  const post = await fetchPost({ id: 'quem-somos' });
+export default async function Page({ params }: { params: { slug: string } }) {
+  const post = await fetchPost({ id: params.slug });
 
   return (
     <div className="bg-tertiary/10 bg-1 flex min-h-full w-full flex-col justify-between">
